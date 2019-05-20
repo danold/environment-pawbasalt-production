@@ -1,14 +1,26 @@
-expose:
-  Args: 
-    - --v
-    - 4
-  Annotations:
-    helm.sh/hook: post-install,post-upgrade
-    helm.sh/hook-delete-policy: hook-succeeded
-
+PipelineSecrets:
+  DockerConfig: '{"auths": {"docker-registry.default.svc:5000": {"auth": "c2VydmljZWFjY291bnQ6ZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNklpSjkuZXlKcGMzTWlPaUpyZFdKbGNtNWxkR1Z6TDNObGNuWnBZMlZoWTJOdmRXNTBJaXdpYTNWaVpYSnVaWFJsY3k1cGJ5OXpaWEoyYVdObFlXTmpiM1Z1ZEM5dVlXMWxjM0JoWTJVaU9pSnBibXR2Y0NJc0ltdDFZbVZ5Ym1WMFpYTXVhVzh2YzJWeWRtbGpaV0ZqWTI5MWJuUXZjMlZqY21WMExtNWhiV1VpT2lKcVpXNXJhVzV6TFhndGNtVm5hWE4wY25rdGRHOXJaVzR0Ym1Ka09XUWlMQ0pyZFdKbGNtNWxkR1Z6TG1sdkwzTmxjblpwWTJWaFkyTnZkVzUwTDNObGNuWnBZMlV0WVdOamIzVnVkQzV1WVcxbElqb2lhbVZ1YTJsdWN5MTRMWEpsWjJsemRISjVJaXdpYTNWaVpYSnVaWFJsY3k1cGJ5OXpaWEoyYVdObFlXTmpiM1Z1ZEM5elpYSjJhV05sTFdGalkyOTFiblF1ZFdsa0lqb2lOVGMwT1RnMk5HUXROMkl3WWkweE1XVTVMV0k0TkRZdE1EQXdaRE5oTW1SaVltSTBJaXdpYzNWaUlqb2ljM2x6ZEdWdE9uTmxjblpwWTJWaFkyTnZkVzUwT21sdWEyOXdPbXBsYm10cGJuTXRlQzF5WldkcGMzUnllU0o5LmFnWmZ0emZBeDZwbEF4YTY2VnRBbHNKQ1paYnBsNEdLdzdoVTZ1djduejBKUkV3bExjRHNCUHBrbk1pWm80MmpaUUVJZkN6RGpxZmo3WGtaRDBZZ2c0WkREZ3VBek8xRUttbG5WUDZpYmowVFhwWnV6U2NVUk5SNEN6cV9JaEVqcHRjd1JKNHdNck1LZ2daaTdWdWxjOGxaYm9hU1dOYlhQa2RKbVFTWEpKclBHNkJ6TVpvMWg0aTFsWm1feHV6SjQzX25yOXRBRkRocTdEaGQtenNJMDdidExyVHpiTmFacnFjdkI3M0pPN0k0UThVeFhWSXFFRFFGcVpyYk8wdnZ3cmNQZ3dpMjF3djd4NGRSNVdMRVhPejA0bmZkSDUtQ0Ixb1JKM0JoUW1Jc0tmVC1DRl9VS3BQQl9hblBoejdTMTlnb3dhNmpjUXN5UTQ4T1RNYW5Wdw=="}}}'
 cleanup:
-  Args: 
-    - --cleanup
   Annotations:
     helm.sh/hook: pre-delete
     helm.sh/hook-delete-policy: hook-succeeded
+  Args:
+  - --cleanup
+expose:
+  Annotations:
+    helm.sh/hook: post-install,post-upgrade
+    helm.sh/hook-delete-policy: hook-succeeded
+  Args:
+  - --v
+  - 4
+  config:
+    domain: api.betalaibutik.se
+    exposer: Route
+    http: "true"
+jenkins:
+  Servers:
+    Global:
+      EnvVars:
+        DOCKER_REGISTRY: docker-registry.default.svc:5000
+        TILLER_NAMESPACE: kube-system
+prow: {}
